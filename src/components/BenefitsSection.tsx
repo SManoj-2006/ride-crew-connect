@@ -85,7 +85,7 @@ const BenefitsSection = () => {
         
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
-            <Card key={index} className="driver-card">
+            <Card key={index} className="driver-card hover:shadow-lg transition-shadow">
               <CardHeader>
                 <div className="mb-2">{benefit.icon}</div>
                 <CardTitle>{benefit.title}</CardTitle>

@@ -32,7 +32,7 @@ const HeroSection = () => {
           <div className="relative hidden md:block">
             <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
               <img 
-                src="https://source.unsplash.com/random/800x450/?driver,car" 
+                src="https://images.unsplash.com/photo-1611429532458-c98f891a182d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3"
                 alt="Professional driver" 
                 className="object-cover w-full h-full" 
               />
