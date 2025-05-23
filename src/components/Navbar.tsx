@@ -27,6 +27,9 @@ const Navbar = () => {
             <Link to="/requirements" className="text-gray-700 hover:text-primary transition-colors">
               Requirements
             </Link>
+            <Link to="/admin" className="text-gray-700 hover:text-primary transition-colors">
+              Admin
+            </Link>
             <Button asChild>
               <Link to="/apply">Apply Now</Link>
             </Button>
@@ -68,6 +71,13 @@ const Navbar = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Requirements
+              </Link>
+              <Link 
+                to="/admin" 
+                className="text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Admin
               </Link>
               <Button asChild className="w-fit">
                 <Link to="/apply" onClick={() => setIsOpen(false)}>Apply Now</Link>
