@@ -1,70 +1,86 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, User, Car, Shield, Clock } from "lucide-react";
+
+const requirements = [
+  {
+    category: "Driver Requirements",
+    icon: <User className="h-6 w-6 text-primary" />,
+    items: [
+      "Must be at least 21 years old",
+      "Valid driver's license for 3+ years",
+      "Clean driving record",
+      "Eligible to work in the US",
+      "Pass background check",
+    ],
+  },
+  {
+    category: "Vehicle Requirements",
+    icon: <Car className="h-6 w-6 text-primary" />,
+    items: [
+      "2010 model year or newer",
+      "4-door vehicle",
+      "Valid registration and insurance",
+      "Pass vehicle inspection",
+      "Good working condition",
+    ],
+  },
+  {
+    category: "Documents Needed",
+    icon: <Shield className="h-6 w-6 text-primary" />,
+    items: [
+      "Government-issued ID",
+      "Driver's license",
+      "Vehicle registration",
+      "Proof of insurance",
+      "SSN for background check",
+    ],
+  },
+  {
+    category: "Process Timeline",
+    icon: <Clock className="h-6 w-6 text-primary" />,
+    items: [
+      "Application review: 24 hours",
+      "Background check: 2-3 days",
+      "Vehicle inspection: 1 day",
+      "Approval notification: Same day",
+      "Start driving: Immediately",
+    ],
+  },
+];
 
 const RequirementsSection = () => {
-  const driverRequirements = [
-    "Must be at least 21 years of age",
-    "Valid driver's license for at least 1 year",
-    "Clean driving record with no major violations",
-    "Must pass background check",
-    "Smartphone compatible with our driver app",
-  ];
-
-  const vehicleRequirements = [
-    "4-door vehicle in good condition",
-    "Vehicle must be 10 years old or newer",
-    "Current registration and insurance",
-    "Must pass vehicle inspection",
-    "Working AC and heating",
-  ];
-
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-16">
       <div className="container">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl font-bold mb-4">Driver Requirements</h2>
+          <h2 className="text-3xl font-bold mb-4">Requirements Overview</h2>
           <p className="text-lg text-muted-foreground">
-            Before applying, please make sure you meet our basic driver and vehicle requirements.
+            Here's everything you need to know to get started as a driver with our platform.
           </p>
         </div>
         
-        <div className="grid gap-8 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Driver Requirements</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {driverRequirements.map((req, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="mr-3 mt-0.5">
-                      <Check className="h-5 w-5 text-primary" />
-                    </div>
-                    <span>{req}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Vehicle Requirements</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {vehicleRequirements.map((req, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="mr-3 mt-0.5">
-                      <Check className="h-5 w-5 text-primary" />
-                    </div>
-                    <span>{req}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+        <div className="grid gap-6 md:grid-cols-2">
+          {requirements.map((requirement, index) => (
+            <Card key={index} className="h-full">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  {requirement.icon}
+                  <CardTitle className="text-xl">{requirement.category}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {requirement.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

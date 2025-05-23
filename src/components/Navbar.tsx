@@ -5,60 +5,78 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Car } from "lucide-react";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <Car className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">RideCrewConnect</span>
-        </Link>
-        
-        {/* Mobile menu button */}
-        <button 
-          className="md:hidden p-2" 
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
-        
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-sm font-medium hover:text-primary">Home</Link>
-          <Link to="/benefits" className="text-sm font-medium hover:text-primary">Benefits</Link>
-          <Link to="/requirements" className="text-sm font-medium hover:text-primary">Requirements</Link>
-          <Link to="/apply" className="text-sm font-medium hover:text-primary">Apply</Link>
-          <Link to="/dashboard">
-            <Button>Company Login</Button>
+    <nav className="bg-white border-b sticky top-0 z-50">
+      <div className="container">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center gap-2">
+            <Car className="h-8 w-8 text-primary" />
+            <span className="text-xl font-bold">RideCrewConnect</span>
           </Link>
-        </nav>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-gray-700 hover:text-primary transition-colors">
+              Home
+            </Link>
+            <Link to="/benefits" className="text-gray-700 hover:text-primary transition-colors">
+              Benefits
+            </Link>
+            <Link to="/requirements" className="text-gray-700 hover:text-primary transition-colors">
+              Requirements
+            </Link>
+            <Button asChild>
+              <Link to="/apply">Apply Now</Link>
+            </Button>
+          </div>
+          
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
+        </div>
         
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="fixed inset-0 top-16 z-50 flex flex-col bg-background md:hidden">
-            <nav className="flex flex-col items-center gap-6 p-6">
-              <Link to="/" className="text-xl font-medium hover:text-primary" onClick={toggleMenu}>Home</Link>
-              <Link to="/benefits" className="text-xl font-medium hover:text-primary" onClick={toggleMenu}>Benefits</Link>
-              <Link to="/requirements" className="text-xl font-medium hover:text-primary" onClick={toggleMenu}>Requirements</Link>
-              <Link to="/apply" className="text-xl font-medium hover:text-primary" onClick={toggleMenu}>Apply</Link>
-              <Link to="/dashboard" onClick={toggleMenu}>
-                <Button size="lg">Company Login</Button>
+        {/* Mobile Navigation */}
+        {isOpen && (
+          <div className="md:hidden py-4 border-t">
+            <div className="flex flex-col space-y-4">
+              <Link 
+                to="/" 
+                className="text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
               </Link>
-            </nav>
+              <Link 
+                to="/benefits" 
+                className="text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Benefits
+              </Link>
+              <Link 
+                to="/requirements" 
+                className="text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Requirements
+              </Link>
+              <Button asChild className="w-fit">
+                <Link to="/apply" onClick={() => setIsOpen(false)}>Apply Now</Link>
+              </Button>
+            </div>
           </div>
         )}
       </div>
-    </header>
+    </nav>
   );
 };
 
