@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Car } from "lucide-react";
+import { Menu, X, Car, User } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,9 +30,20 @@ const Navbar = () => {
             <Link to="/admin" className="text-gray-700 hover:text-primary transition-colors">
               Admin
             </Link>
-            <Button asChild>
-              <Link to="/apply">Apply Now</Link>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/driver/login">
+                  <User className="h-4 w-4 mr-1" />
+                  Driver Login
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/customer/login">Customer Login</Link>
+              </Button>
+              <Button asChild>
+                <Link to="/apply">Apply Now</Link>
+              </Button>
+            </div>
           </div>
           
           {/* Mobile menu button */}
@@ -79,6 +90,15 @@ const Navbar = () => {
               >
                 Admin
               </Link>
+              <Button variant="outline" size="sm" asChild className="w-fit">
+                <Link to="/driver/login" onClick={() => setIsOpen(false)}>
+                  <User className="h-4 w-4 mr-1" />
+                  Driver Login
+                </Link>
+              </Button>
+              <Button variant="outline" size="sm" asChild className="w-fit">
+                <Link to="/customer/login" onClick={() => setIsOpen(false)}>Customer Login</Link>
+              </Button>
               <Button asChild className="w-fit">
                 <Link to="/apply" onClick={() => setIsOpen(false)}>Apply Now</Link>
               </Button>

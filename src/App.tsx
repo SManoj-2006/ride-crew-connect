@@ -11,6 +11,9 @@ import Benefits from "./pages/Benefits";
 import Requirements from "./pages/Requirements";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import DriverLogin from "./pages/DriverLogin";
+import CustomerLogin from "./pages/CustomerLogin";
+import CustomerDashboard from "./pages/CustomerDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
