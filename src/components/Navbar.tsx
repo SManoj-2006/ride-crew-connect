@@ -2,10 +2,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Car, User } from "lucide-react";
+import { Menu, X, Car, User, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50">
@@ -30,19 +37,34 @@ const Navbar = () => {
             <Link to="/admin" className="text-gray-700 hover:text-primary transition-colors">
               Admin
             </Link>
+            
             <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/driver/login">
-                  <User className="h-4 w-4 mr-1" />
-                  Driver Login
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/customer/login">Customer Login</Link>
-              </Button>
-              <Button asChild>
-                <Link to="/apply">Apply Now</Link>
-              </Button>
+              {user ? (
+                <>
+                  <span className="text-sm text-gray-600">
+                    Welcome, {user.name || user.email}
+                  </span>
+                  <Button variant="outline" size="sm" onClick={handleLogout}>
+                    <LogOut className="h-4 w-4 mr-1" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/driver/login">
+                      <User className="h-4 w-4 mr-1" />
+                      Driver Login
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/customer/login">Customer Login</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link to="/apply">Apply Now</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           
@@ -90,18 +112,33 @@ const Navbar = () => {
               >
                 Admin
               </Link>
-              <Button variant="outline" size="sm" asChild className="w-fit">
-                <Link to="/driver/login" onClick={() => setIsOpen(false)}>
-                  <User className="h-4 w-4 mr-1" />
-                  Driver Login
-                </Link>
-              </Button>
-              <Button variant="outline" size="sm" asChild className="w-fit">
-                <Link to="/customer/login" onClick={() => setIsOpen(false)}>Customer Login</Link>
-              </Button>
-              <Button asChild className="w-fit">
-                <Link to="/apply" onClick={() => setIsOpen(false)}>Apply Now</Link>
-              </Button>
+              
+              {user ? (
+                <>
+                  <div className="text-sm text-gray-600 px-2">
+                    Welcome, {user.name || user.email}
+                  </div>
+                  <Button variant="outline" size="sm" onClick={handleLogout} className="w-fit">
+                    <LogOut className="h-4 w-4 mr-1" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" asChild className="w-fit">
+                    <Link to="/driver/login" onClick={() => setIsOpen(false)}>
+                      <User className="h-4 w-4 mr-1" />
+                      Driver Login
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild className="w-fit">
+                    <Link to="/customer/login" onClick={() => setIsOpen(false)}>Customer Login</Link>
+                  </Button>
+                  <Button asChild className="w-fit">
+                    <Link to="/apply" onClick={() => setIsOpen(false)}>Apply Now</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}

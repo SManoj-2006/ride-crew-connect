@@ -8,47 +8,49 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Car, Eye, EyeOff, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
-import { loginSchema, type LoginFormData } from "@/lib/validations";
+import { customerRegistrationSchema, type CustomerRegistrationFormData } from "@/lib/validations";
 import { useState } from "react";
 
-const CustomerLogin = () => {
+const CustomerRegister = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { login, isLoading } = useAuth();
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<CustomerRegistrationFormData>({
+    resolver: zodResolver(customerRegistrationSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      confirmPassword: "",
+      phone: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: CustomerRegistrationFormData) => {
+    setIsLoading(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
     try {
-      const success = await login(data.email, data.password, 'customer');
+      // In a real app, this would be an API call to create the account
+      toast({
+        title: "Account Created Successfully!",
+        description: "Welcome to RideCrewConnect! You can now sign in.",
+      });
       
-      if (success) {
-        toast({
-          title: "Customer Login Successful",
-          description: "Welcome back! Redirecting to your account...",
-        });
-        navigate("/customer/dashboard");
-      } else {
-        toast({
-          title: "Login Failed",
-          description: "Invalid email or password. Please try again.",
-          variant: "destructive",
-        });
-      }
+      navigate("/customer/login");
     } catch (error) {
       toast({
-        title: "Login Error",
+        title: "Registration Failed",
         description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,22 +62,39 @@ const CustomerLogin = () => {
             <Car className="h-8 w-8" />
             RideCrewConnect
           </Link>
-          <p className="text-gray-600 mt-2">Customer Portal</p>
+          <p className="text-gray-600 mt-2">Customer Registration</p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="h-5 w-5" />
-              Customer Login
+              Create Account
             </CardTitle>
             <CardDescription>
-              Sign in to book rides and manage your account
+              Join RideCrewConnect and start booking rides
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your full name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="email"
@@ -85,7 +104,25 @@ const CustomerLogin = () => {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="customer@example.com"
+                          placeholder="your@email.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          placeholder="+1 (555) 123-4567"
                           {...field}
                         />
                       </FormControl>
@@ -104,7 +141,7 @@ const CustomerLogin = () => {
                         <div className="relative">
                           <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
+                            placeholder="Create a strong password"
                             {...field}
                           />
                           <Button
@@ -127,37 +164,55 @@ const CustomerLogin = () => {
                   )}
                 />
 
-                <div className="flex items-center justify-between">
-                  <Link
-                    to="/customer/forgot-password"
-                    className="text-sm text-primary hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type={showConfirmPassword ? "text" : "password"}
+                            placeholder="Confirm your password"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
                 <Button
                   type="submit"
                   className="w-full"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing in..." : "Sign In"}
+                  {isLoading ? "Creating Account..." : "Create Account"}
                 </Button>
               </form>
             </Form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Don't have an account?{" "}
-                <Link to="/customer/register" className="text-primary hover:underline">
-                  Create customer account
+                Already have an account?{" "}
+                <Link to="/customer/login" className="text-primary hover:underline">
+                  Sign in here
                 </Link>
-              </p>
-            </div>
-
-            <div className="mt-4 text-center">
-              <p className="text-xs text-gray-500">
-                Demo credentials: customer@example.com / customer123
               </p>
             </div>
 
@@ -176,4 +231,4 @@ const CustomerLogin = () => {
   );
 };
 
-export default CustomerLogin;
+export default CustomerRegister;
