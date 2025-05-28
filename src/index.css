@@ -95,14 +95,79 @@
   }
 }
 
+/* Indian theme gradients */
 .gradient-bg {
-  background: linear-gradient(135deg, #9b87f5 0%, #6E59A5 100%);
+  background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+}
+
+.gradient-indian {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 25%, #FFFFFF 50%, #6FB33F 75%, #138808 100%);
 }
 
 .driver-card {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .driver-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Indian flag colors for accents */
+.text-saffron {
+  color: #FF9933;
+}
+
+.text-india-green {
+  color: #138808;
+}
+
+.bg-saffron {
+  background-color: #FF9933;
+}
+
+.bg-india-green {
+  background-color: #138808;
+}
+
+/* Enhanced animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
