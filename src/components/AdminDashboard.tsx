@@ -22,37 +22,45 @@ import {
   Clock,
   Settings,
   BarChart3,
-  FileText
+  FileText,
+  Shield,
+  Phone,
+  Building,
+  UserCheck,
+  HeadphonesIcon
 } from "lucide-react";
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState([
     {
       id: 1,
-      name: "John Smith",
-      email: "john@example.com",
-      phone: "(555) 123-4567",
+      name: "Rajesh Kumar",
+      email: "rajesh@example.in",
+      phone: "+91 9876543210",
       status: "pending",
       appliedDate: "2024-01-15",
-      vehicle: "Toyota Camry 2020"
+      vehicle: "Maruti Suzuki Swift 2020",
+      location: "Mumbai, Maharashtra"
     },
     {
       id: 2,
-      name: "Sarah Johnson",
-      email: "sarah@example.com",
-      phone: "(555) 987-6543",
+      name: "Priya Sharma",
+      email: "priya@example.in",
+      phone: "+91 9876543211",
       status: "approved",
       appliedDate: "2024-01-14",
-      vehicle: "Honda Civic 2021"
+      vehicle: "Hyundai i20 2021",
+      location: "Delhi, NCR"
     },
     {
       id: 3,
-      name: "Mike Davis",
-      email: "mike@example.com",
-      phone: "(555) 456-7890",
+      name: "Amit Singh",
+      email: "amit@example.in",
+      phone: "+91 9876543212",
       status: "rejected",
       appliedDate: "2024-01-13",
-      vehicle: "Ford Focus 2019"
+      vehicle: "Tata Tiago 2019",
+      location: "Bangalore, Karnataka"
     }
   ]);
 
@@ -80,21 +88,21 @@ const AdminDashboard = () => {
   const stats = [
     {
       title: "Total Drivers",
-      value: "1,234",
+      value: "12,340",
       icon: <Users className="h-6 w-6" />,
       change: "+12%",
       changeType: "positive"
     },
     {
       title: "Active Rides",
-      value: "856",
+      value: "8,560",
       icon: <Car className="h-6 w-6" />,
       change: "+8%",
       changeType: "positive"
     },
     {
       title: "Revenue",
-      value: "$45,678",
+      value: "₹45,67,800",
       icon: <DollarSign className="h-6 w-6" />,
       change: "+15%",
       changeType: "positive"
@@ -112,7 +120,7 @@ const AdminDashboard = () => {
     <div className="container mx-auto p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Manage your ride-sharing platform</p>
+        <p className="text-muted-foreground">Manage your Indian ride-sharing platform</p>
       </div>
 
       {/* Stats Cards */}
@@ -135,11 +143,13 @@ const AdminDashboard = () => {
 
       {/* Main Content Tabs */}
       <Tabs defaultValue="applications" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="applications">Applications</TabsTrigger>
           <TabsTrigger value="drivers">Drivers</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="rupees">₹ Rupees</TabsTrigger>
+          <TabsTrigger value="tracking">Tracking</TabsTrigger>
+          <TabsTrigger value="employees">Employees</TabsTrigger>
+          <TabsTrigger value="support">Support</TabsTrigger>
         </TabsList>
 
         {/* Applications Tab */}
@@ -159,6 +169,7 @@ const AdminDashboard = () => {
                     <TableHead>Email</TableHead>
                     <TableHead>Phone</TableHead>
                     <TableHead>Vehicle</TableHead>
+                    <TableHead>Location</TableHead>
                     <TableHead>Applied Date</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Actions</TableHead>
@@ -171,6 +182,7 @@ const AdminDashboard = () => {
                       <TableCell>{app.email}</TableCell>
                       <TableCell>{app.phone}</TableCell>
                       <TableCell>{app.vehicle}</TableCell>
+                      <TableCell>{app.location}</TableCell>
                       <TableCell>{app.appliedDate}</TableCell>
                       <TableCell>{getStatusBadge(app.status)}</TableCell>
                       <TableCell>
@@ -214,17 +226,27 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {[1, 2, 3, 4, 5, 6].map((driver) => (
-                  <Card key={driver}>
+                {[
+                  { name: "Suresh Patel", location: "Mumbai", rating: "4.8", status: "Online" },
+                  { name: "Ravi Kumar", location: "Delhi", rating: "4.9", status: "Online" },
+                  { name: "Ankit Sharma", location: "Bangalore", rating: "4.7", status: "Offline" },
+                  { name: "Deepak Singh", location: "Pune", rating: "4.6", status: "Online" },
+                  { name: "Manoj Yadav", location: "Chennai", rating: "4.8", status: "Online" },
+                  { name: "Vijay Kumar", location: "Hyderabad", rating: "4.9", status: "Offline" }
+                ].map((driver, index) => (
+                  <Card key={index}>
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3">
                         <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
                           <Users className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                          <h3 className="font-semibold">Driver {driver}</h3>
-                          <p className="text-sm text-muted-foreground">4.8 ★ rating</p>
-                          <Badge className="mt-1 bg-green-100 text-green-800">Online</Badge>
+                          <h3 className="font-semibold">{driver.name}</h3>
+                          <p className="text-sm text-muted-foreground">{driver.location}</p>
+                          <p className="text-sm text-muted-foreground">{driver.rating} ★ rating</p>
+                          <Badge className={`mt-1 ${driver.status === 'Online' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                            {driver.status}
+                          </Badge>
                         </div>
                       </div>
                     </CardContent>
@@ -235,19 +257,42 @@ const AdminDashboard = () => {
           </Card>
         </TabsContent>
 
-        {/* Analytics Tab */}
-        <TabsContent value="analytics">
+        {/* Rupees Tab */}
+        <TabsContent value="rupees">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5" />
-                  Monthly Revenue
+                  <DollarSign className="h-5 w-5" />
+                  Revenue Analytics (₹)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-64 flex items-center justify-center text-muted-foreground">
-                  Revenue chart would go here
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Today's Revenue</span>
+                    <span className="font-bold text-2xl">₹1,24,567</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>This Week</span>
+                    <span className="font-semibold">₹8,76,543</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>This Month</span>
+                    <span className="font-semibold">₹45,67,800</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Commission Rate</span>
+                    <span className="font-semibold">15%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Base Fare</span>
+                    <span className="font-semibold">₹25</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Per KM Rate</span>
+                    <span className="font-semibold">₹12</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -255,70 +300,227 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5" />
-                  Driver Performance
+                  <BarChart3 className="h-5 w-5" />
+                  Payment Methods
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-64 flex items-center justify-center text-muted-foreground">
-                  Performance metrics would go here
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>UPI Payments</span>
+                    <span className="font-semibold">65%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Cash Payments</span>
+                    <span className="font-semibold">25%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Card Payments</span>
+                    <span className="font-semibold">8%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Wallet Payments</span>
+                    <span className="font-semibold">2%</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
-        {/* Settings Tab */}
-        <TabsContent value="settings">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                System Settings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid gap-4 md:grid-cols-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">Platform Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span>Commission Rate</span>
-                      <span className="font-semibold">15%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Base Fare</span>
-                      <span className="font-semibold">$2.50</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Per Mile Rate</span>
-                      <span className="font-semibold">$1.20</span>
-                    </div>
-                    <Button className="w-full">Update Settings</Button>
-                  </CardContent>
-                </Card>
+        {/* Tracking Tab */}
+        <TabsContent value="tracking">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Car className="h-5 w-5" />
+                  SOS & Emergency Tracking
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Active Rides</span>
+                    <span className="font-bold text-green-600">1,234</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Emergency Alerts</span>
+                    <span className="font-bold text-red-600">3</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Speed Violations</span>
+                    <span className="font-bold text-orange-600">12</span>
+                  </div>
+                  <Button className="w-full bg-red-600 hover:bg-red-700">
+                    Emergency Response Center
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg">User Management</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Button className="w-full" variant="outline">
-                      Export User Data
-                    </Button>
-                    <Button className="w-full" variant="outline">
-                      Send Notifications
-                    </Button>
-                    <Button className="w-full" variant="outline">
-                      Backup Database
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Admin & Company Access
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Admin Users</span>
+                    <span className="font-semibold">12</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Company Admins</span>
+                    <span className="font-semibold">5</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Access Logs Today</span>
+                    <span className="font-semibold">248</span>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Manage Access Rights
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Employees Tab */}
+        <TabsContent value="employees">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UserCheck className="h-5 w-5" />
+                  Employee Access Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Total Employees</span>
+                    <span className="font-semibold">156</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Active Sessions</span>
+                    <span className="font-semibold">89</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Department Access</span>
+                    <span className="font-semibold">8 Depts</span>
+                  </div>
+                  <Button className="w-full">
+                    Employee Directory
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Building className="h-5 w-5" />
+                  Employee Roles & Permissions
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Admin Role</span>
+                    <span className="font-semibold">5 users</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Manager Role</span>
+                    <span className="font-semibold">12 users</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Support Role</span>
+                    <span className="font-semibold">25 users</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Analyst Role</span>
+                    <span className="font-semibold">18 users</span>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Manage Roles
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* Support Tab */}
+        <TabsContent value="support">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <HeadphonesIcon className="h-5 w-5" />
+                  Customer Support
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span>Open Tickets</span>
+                    <span className="font-bold text-orange-600">47</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Resolved Today</span>
+                    <span className="font-bold text-green-600">23</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Average Response Time</span>
+                    <span className="font-semibold">2.5 mins</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Customer Satisfaction</span>
+                    <span className="font-semibold">4.6/5</span>
+                  </div>
+                  <Button className="w-full">
+                    Support Dashboard
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Phone className="h-5 w-5" />
+                  24/7 Support Center
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold">1800-RIDECREW</p>
+                    <p className="text-sm text-muted-foreground">Toll-free helpline</p>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Calls Today</span>
+                    <span className="font-semibold">1,247</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Chat Sessions</span>
+                    <span className="font-semibold">2,156</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span>Email Tickets</span>
+                    <span className="font-semibold">89</span>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Live Support
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

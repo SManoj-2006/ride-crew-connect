@@ -53,14 +53,14 @@ const CustomerLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-bold text-primary">
             <Car className="h-8 w-8" />
-            RideCrewConnect
+            RideCrewConnect India
           </Link>
-          <p className="text-gray-600 mt-2">Customer Portal</p>
+          <p className="text-gray-600 mt-2">Customer Portal - India</p>
         </div>
 
         <Card>
@@ -70,7 +70,7 @@ const CustomerLogin = () => {
               Customer Login
             </CardTitle>
             <CardDescription>
-              Sign in to book rides and manage your account
+              Sign in to book rides across India with UPI payments
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -85,7 +85,7 @@ const CustomerLogin = () => {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="customer@example.com"
+                          placeholder="customer@example.in"
                           {...field}
                         />
                       </FormControl>
@@ -157,7 +157,7 @@ const CustomerLogin = () => {
 
             <div className="mt-4 text-center">
               <p className="text-xs text-gray-500">
-                Demo credentials: customer@example.com / customer123
+                Demo credentials: customer@example.in / customer123
               </p>
             </div>
 
@@ -168,6 +168,12 @@ const CustomerLogin = () => {
               >
                 Driver Login →
               </Link>
+            </div>
+
+            <div className="mt-4 p-3 bg-green-50 rounded-lg">
+              <p className="text-xs text-green-800">
+                <strong>India Special:</strong> Pay with UPI, PhonePe, Paytm, GPay. Safe rides with emergency SOS. Available in 100+ Indian cities.
+              </p>
             </div>
           </CardContent>
         </Card>

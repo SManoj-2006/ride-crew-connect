@@ -53,21 +53,21 @@ const DriverLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-green-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-bold text-primary">
             <Car className="h-8 w-8" />
-            RideCrewConnect
+            RideCrewConnect India
           </Link>
-          <p className="text-gray-600 mt-2">Driver Portal</p>
+          <p className="text-gray-600 mt-2">Driver Portal - India</p>
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Driver Login</CardTitle>
             <CardDescription>
-              Sign in to access your driver dashboard
+              Sign in to access your driver dashboard across India
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -82,7 +82,7 @@ const DriverLogin = () => {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="driver@example.com"
+                          placeholder="driver@example.in"
                           {...field}
                         />
                       </FormControl>
@@ -154,7 +154,7 @@ const DriverLogin = () => {
 
             <div className="mt-4 text-center">
               <p className="text-xs text-gray-500">
-                Demo credentials: driver@example.com / driver123
+                Demo credentials: driver@example.in / driver123
               </p>
             </div>
 
@@ -165,6 +165,12 @@ const DriverLogin = () => {
               >
                 Customer Login →
               </Link>
+            </div>
+
+            <div className="mt-4 p-3 bg-orange-50 rounded-lg">
+              <p className="text-xs text-orange-800">
+                <strong>Indian Features:</strong> UPI payments, emergency SOS, Hindi language support, and coverage in 100+ cities across India.
+              </p>
             </div>
           </CardContent>
         </Card>

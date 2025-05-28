@@ -35,7 +35,7 @@ const Admin = () => {
       if (success) {
         toast({
           title: "Admin Login Successful",
-          description: "Welcome to the admin dashboard!",
+          description: "Welcome to the Indian admin dashboard!",
         });
       } else {
         toast({
@@ -63,16 +63,16 @@ const Admin = () => {
   // If not logged in or not an admin, show login form
   if (!user || user.role !== 'admin') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-green-100 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="h-5 w-5" />
-                Admin Access
+                Admin Access - India
               </CardTitle>
               <CardDescription>
-                Administrator credentials required
+                Administrator credentials required for Indian operations
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -87,7 +87,7 @@ const Admin = () => {
                         <FormControl>
                           <Input
                             type="email"
-                            placeholder="admin@ridecrewconnect.com"
+                            placeholder="admin@ridecrew.in"
                             {...field}
                           />
                         </FormControl>
@@ -126,7 +126,7 @@ const Admin = () => {
 
               <div className="mt-4 text-center">
                 <p className="text-xs text-gray-500">
-                  Demo credentials: admin@ridecrewconnect.com / admin123
+                  Demo credentials: admin@ridecrew.in / admin123
                 </p>
               </div>
 
