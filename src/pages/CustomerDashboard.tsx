@@ -1,44 +1,87 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MapPin, Clock, Car, Star, Phone } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const CustomerDashboard = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
+  const [rideType, setRideType] = useState("Standard");
+  const [when, setWhen] = useState("Now");
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleFindDrivers = () => {
+    if (!pickup || !destination) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both pickup and destination locations.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    toast({
+      title: "Finding Drivers",
+      description: `Looking for ${rideType.toLowerCase()} drivers from ${pickup} to ${destination}...`,
+    });
+  };
+
+  const handleScheduleRide = () => {
+    toast({
+      title: "Schedule Ride",
+      description: "Opening ride scheduler...",
+    });
+  };
+
+  const handleRateDriver = () => {
+    toast({
+      title: "Rate Driver",
+      description: "Opening driver rating form...",
+    });
+  };
+
+  const handleContactSupport = () => {
+    toast({
+      title: "Contacting Support",
+      description: "Connecting you to customer support...",
+    });
+  };
 
   const recentRides = [
     {
       id: 1,
       date: "2024-01-20",
-      from: "Downtown Mall",
-      to: "Airport",
-      driver: "John Smith",
+      from: "Connaught Place, Delhi",
+      to: "IGI Airport, Delhi",
+      driver: "Rajesh Kumar",
       rating: 5,
-      fare: "$45.00"
+      fare: "₹285.00"
     },
     {
       id: 2,
       date: "2024-01-18",
-      from: "Home",
-      to: "Office Park",
-      driver: "Sarah Johnson",
+      from: "Bandra West, Mumbai",
+      to: "Powai, Mumbai",
+      driver: "Priya Sharma",
       rating: 4,
-      fare: "$28.50"
+      fare: "₹185.50"
     },
     {
       id: 3,
       date: "2024-01-15",
-      from: "Restaurant",
-      to: "Home",
-      driver: "Mike Wilson",
+      from: "Koramangala, Bangalore",
+      to: "Whitefield, Bangalore",
+      driver: "Amit Singh",
       rating: 5,
-      fare: "$22.00"
+      fare: "₹220.00"
     }
   ];
 
@@ -96,7 +139,11 @@ const CustomerDashboard = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Ride Type</Label>
-                    <select className="w-full p-2 border rounded-md">
+                    <select 
+                      className="w-full p-2 border rounded-md"
+                      value={rideType}
+                      onChange={(e) => setRideType(e.target.value)}
+                    >
                       <option>Standard</option>
                       <option>Premium</option>
                       <option>Shared</option>
@@ -104,14 +151,18 @@ const CustomerDashboard = () => {
                   </div>
                   <div className="space-y-2">
                     <Label>When</Label>
-                    <select className="w-full p-2 border rounded-md">
+                    <select 
+                      className="w-full p-2 border rounded-md"
+                      value={when}
+                      onChange={(e) => setWhen(e.target.value)}
+                    >
                       <option>Now</option>
                       <option>Schedule for later</option>
                     </select>
                   </div>
                 </div>
 
-                <Button className="w-full" size="lg">
+                <Button className="w-full" size="lg" onClick={handleFindDrivers}>
                   Find Drivers
                 </Button>
               </CardContent>
@@ -125,15 +176,15 @@ const CustomerDashboard = () => {
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start" onClick={handleScheduleRide}>
                   <Clock className="mr-2 h-4 w-4" />
                   Schedule Ride
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start" onClick={handleRateDriver}>
                   <Star className="mr-2 h-4 w-4" />
                   Rate Last Driver
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start" onClick={handleContactSupport}>
                   <Phone className="mr-2 h-4 w-4" />
                   Contact Support
                 </Button>
@@ -156,7 +207,7 @@ const CustomerDashboard = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-sm text-gray-600">Total Spent</span>
-                    <span className="font-medium">$1,245.50</span>
+                    <span className="font-medium">₹12,450</span>
                   </div>
                 </div>
               </CardContent>

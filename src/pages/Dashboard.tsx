@@ -1,6 +1,5 @@
-
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/contexts/AuthContext";
@@ -8,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Car, 
   IndianRupee, 
@@ -24,12 +24,42 @@ import {
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!user || user.role !== 'driver') {
       navigate('/driver/login');
     }
   }, [user, navigate]);
+
+  const handleGoOnline = () => {
+    toast({
+      title: "Going Online",
+      description: "You are now available to accept rides!",
+    });
+  };
+
+  const handleViewRequests = () => {
+    toast({
+      title: "Active Requests",
+      description: "Checking for nearby ride requests...",
+    });
+  };
+
+  const handleFindFuel = () => {
+    toast({
+      title: "Fuel Stations",
+      description: "Finding nearest fuel stations...",
+    });
+  };
+
+  const handleEmergency = () => {
+    toast({
+      title: "Emergency Support",
+      description: "Connecting to emergency services...",
+      variant: "destructive"
+    });
+  };
 
   if (!user || user.role !== 'driver') {
     return null;
@@ -157,19 +187,19 @@ const Dashboard = () => {
                     <CardDescription>Common driver actions</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <Button className="w-full" variant="outline">
+                    <Button className="w-full" variant="outline" onClick={handleGoOnline}>
                       <MapPin className="h-4 w-4 mr-2" />
                       Go Online
                     </Button>
-                    <Button className="w-full" variant="outline">
+                    <Button className="w-full" variant="outline" onClick={handleViewRequests}>
                       <Route className="h-4 w-4 mr-2" />
                       View Active Requests
                     </Button>
-                    <Button className="w-full" variant="outline">
+                    <Button className="w-full" variant="outline" onClick={handleFindFuel}>
                       <Fuel className="h-4 w-4 mr-2" />
                       Find Fuel Stations
                     </Button>
-                    <Button className="w-full" variant="outline">
+                    <Button className="w-full" variant="outline" onClick={handleEmergency}>
                       <Shield className="h-4 w-4 mr-2" />
                       Emergency Support
                     </Button>

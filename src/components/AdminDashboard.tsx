@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Table, 
   TableBody, 
@@ -31,6 +32,7 @@ import {
 } from "lucide-react";
 
 const AdminDashboard = () => {
+  const { toast } = useToast();
   const [applications, setApplications] = useState([
     {
       id: 1,
@@ -70,6 +72,12 @@ const AdminDashboard = () => {
         app.id === id ? { ...app, status } : app
       )
     );
+    
+    const applicant = applications.find(app => app.id === id);
+    toast({
+      title: `Application ${status}`,
+      description: `${applicant?.name}'s application has been ${status}.`,
+    });
   };
 
   const getStatusBadge = (status: string) => {
@@ -83,6 +91,50 @@ const AdminDashboard = () => {
       default:
         return <Badge>{status}</Badge>;
     }
+  };
+
+  // Button handlers
+  const handleEmergencyResponse = () => {
+    toast({
+      title: "Emergency Response Center",
+      description: "Activating emergency response protocols...",
+      variant: "destructive"
+    });
+  };
+
+  const handleManageAccess = () => {
+    toast({
+      title: "Access Management",
+      description: "Opening access rights management panel...",
+    });
+  };
+
+  const handleEmployeeDirectory = () => {
+    toast({
+      title: "Employee Directory",
+      description: "Loading employee directory...",
+    });
+  };
+
+  const handleManageRoles = () => {
+    toast({
+      title: "Role Management",
+      description: "Opening role and permissions management...",
+    });
+  };
+
+  const handleSupportDashboard = () => {
+    toast({
+      title: "Support Dashboard",
+      description: "Loading support ticket dashboard...",
+    });
+  };
+
+  const handleLiveSupport = () => {
+    toast({
+      title: "Live Support",
+      description: "Connecting to live support center...",
+    });
   };
 
   const stats = [
@@ -328,7 +380,6 @@ const AdminDashboard = () => {
           </div>
         </TabsContent>
 
-        {/* Tracking Tab */}
         <TabsContent value="tracking">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
@@ -352,7 +403,7 @@ const AdminDashboard = () => {
                     <span>Speed Violations</span>
                     <span className="font-bold text-orange-600">12</span>
                   </div>
-                  <Button className="w-full bg-red-600 hover:bg-red-700">
+                  <Button className="w-full bg-red-600 hover:bg-red-700" onClick={handleEmergencyResponse}>
                     Emergency Response Center
                   </Button>
                 </div>
@@ -380,7 +431,7 @@ const AdminDashboard = () => {
                     <span>Access Logs Today</span>
                     <span className="font-semibold">248</span>
                   </div>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full" variant="outline" onClick={handleManageAccess}>
                     Manage Access Rights
                   </Button>
                 </div>
@@ -389,7 +440,6 @@ const AdminDashboard = () => {
           </div>
         </TabsContent>
 
-        {/* Employees Tab */}
         <TabsContent value="employees">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
@@ -413,7 +463,7 @@ const AdminDashboard = () => {
                     <span>Department Access</span>
                     <span className="font-semibold">8 Depts</span>
                   </div>
-                  <Button className="w-full">
+                  <Button className="w-full" onClick={handleEmployeeDirectory}>
                     Employee Directory
                   </Button>
                 </div>
@@ -445,7 +495,7 @@ const AdminDashboard = () => {
                     <span>Analyst Role</span>
                     <span className="font-semibold">18 users</span>
                   </div>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full" variant="outline" onClick={handleManageRoles}>
                     Manage Roles
                   </Button>
                 </div>
@@ -454,7 +504,6 @@ const AdminDashboard = () => {
           </div>
         </TabsContent>
 
-        {/* Support Tab */}
         <TabsContent value="support">
           <div className="grid gap-6 md:grid-cols-2">
             <Card>
@@ -482,7 +531,7 @@ const AdminDashboard = () => {
                     <span>Customer Satisfaction</span>
                     <span className="font-semibold">4.6/5</span>
                   </div>
-                  <Button className="w-full">
+                  <Button className="w-full" onClick={handleSupportDashboard}>
                     Support Dashboard
                   </Button>
                 </div>
@@ -514,7 +563,7 @@ const AdminDashboard = () => {
                     <span>Email Tickets</span>
                     <span className="font-semibold">89</span>
                   </div>
-                  <Button className="w-full" variant="outline">
+                  <Button className="w-full" variant="outline" onClick={handleLiveSupport}>
                     Live Support
                   </Button>
                 </div>
